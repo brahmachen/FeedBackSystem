@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">FeedBackSystem</string>
+    <string name="action_settings">Settings</string>
+    <string name="type1">申请农村土地承包经营权的登记发证</string>
+    <string name="type2">土地仲裁申请</string>
+    <string name="type3">土地流转权属变更或注销申请</string>
+    <string name="type4">宗地承包合同浏览或填写申请</string>
+    <string name="type5">基本农田违法案件举报</string>
+</resources>
