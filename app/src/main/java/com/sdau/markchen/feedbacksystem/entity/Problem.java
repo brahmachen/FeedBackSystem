@@ -1,20 +1,21 @@
 package com.sdau.markchen.feedbacksystem.entity;
 
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by mark chen on 2015/12/30.
  */
 public class Problem {
     private int id;
-    private String zjh;//日期+3位流水号
-    private String bt;//标题
-    private String nr;//内容
+    private String zjh = "";//日期+3位流水号
+    private String bt = "";//标题
+    private String nr = "";//内容
     private Date sbsj;//上报时间
-    private String x;
-    private String y;
-    private String tp;//图片路径
-    private int lx;
+    private String x = "0";
+    private String y = "0";
+    private String tp = "/";//图片路径
+    private int lx = 0;
 
     public Problem() {
     }
@@ -104,5 +105,19 @@ public class Problem {
                 ", tp='" + tp + '\'' +
                 ", lx=" + lx +
                 '}';
+    }
+
+    public HashMap getHashMap() {
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+        hashMap.put("id", id + "");
+        hashMap.put("zjh", zjh);
+        hashMap.put("bt", this.bt);
+        hashMap.put("nr", nr);
+        hashMap.put("sbsj", sbsj + "");
+        hashMap.put("x", x);
+        hashMap.put("y", y);
+        hashMap.put("tp", tp);
+        hashMap.put("lx", lx + "");
+        return hashMap;
     }
 }

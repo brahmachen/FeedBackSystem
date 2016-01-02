@@ -3,6 +3,7 @@ package com.sdau.markchen.feedbacksystem;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,11 +13,18 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.sdau.markchen.feedbacksystem.R;
+import com.sdau.markchen.feedbacksystem.global.MyApplication;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        testVolleyGet();
     }
 
     public void onClick(View view) {
@@ -124,4 +134,24 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
+    public void testVolleyGet() {
+        String url = "http://192.168.0.12:8080/FeedBackSystem/test?abc=123&123=abc";
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("error", error.toString());
+            }
+        });
+        MyApplication.getQueues().add(request);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.sdau.markchen.feedbacksystem;
 
 import android.Manifest;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,10 +26,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.sdau.markchen.feedbacksystem.entity.Problem;
+import com.sdau.markchen.feedbacksystem.global.MyApplication;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by mark chen on 2015/12/30.
@@ -272,6 +285,7 @@ public class FeedBackActivity extends AppCompatActivity {
         Log.i("data", problem.toString());
 
         Toast.makeText(this, problem.toString(), Toast.LENGTH_LONG).show();
+        testVolleyPost();
     }
 
     @Override
@@ -322,5 +336,29 @@ public class FeedBackActivity extends AppCompatActivity {
             return;
         }
         lm.removeUpdates(locationListener);
+    }
+
+    public void testVolleyPost() {
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, "http://192.168.0.12:8080/FeedBackSystem/test",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                return problem.getHashMap();
+            }
+        };
+        MyApplication.getQueues().add(postRequest);
     }
 }
